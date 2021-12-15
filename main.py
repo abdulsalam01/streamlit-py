@@ -2,10 +2,10 @@ import plotly.express as px
 import streamlit as st
 import pandas as pd
 
-df_csv = pd.read_csv('produksi_minyak_mentah.csv')
-df_json = pd.read_json('kode_negara_lengkap.json')
-df_json.to_csv("json.csv", index=False)
-csv_json = pd.read_csv("json.csv")
+df_csv = pd.read_csv('data/produksi_minyak_mentah.csv')
+df_json = pd.read_json('data/kode_negara_lengkap.json')
+df_json.to_csv("data/json.csv", index=False)
+csv_json = pd.read_csv("data/json.csv")
 
 
 # print-all
@@ -13,10 +13,10 @@ df = df_csv.merge(csv_json, left_on='kode_negara', right_on='alpha-3')
 
 # select-filter
 st.sidebar.header("Pilih Filter:")
-name_negara = st.sidebar.multiselect(
+name = st.sidebar.multiselect(
     "Pilih Negara:",
-    options=df['name_negara'].unique(),
-    default=df['name_negara'].unique(),
+    options=df['name'].unique(),
+    default=df['name'].unique(),
 )
 
 tahun = st.sidebar.multiselect(
@@ -27,11 +27,11 @@ tahun = st.sidebar.multiselect(
 
 # Filter
 filter_data = df.query(
-    "name_negara == @name_negara & tahun == @tahun"
+    "name == @name & tahun == @tahun"
 )
 
 # Chart
-data_pertahun = filter_data.groupby(by='name_negara').sum()[['produksi']]
+data_pertahun = filter_data.groupby(by='name').sum()[['produksi']]
 
 fig_data = px.bar(
     data_pertahun,
