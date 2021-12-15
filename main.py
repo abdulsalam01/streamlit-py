@@ -81,4 +81,6 @@ fig_data2.update_layout(
 
 st.plotly_chart(fig_data, use_container_width=True)
 st.plotly_chart(fig_data2, use_container_width=True)
+
+st.write("List negara dengan nilai produksi tertinggi")
 st.table(df2)
