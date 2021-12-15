@@ -25,9 +25,15 @@ tahun = st.sidebar.multiselect(
     default=df["tahun"].unique(),
 )
 
+region = st.sidebar.multiselect(
+    "Pilih Region:",
+    options=df["region"].unique(),
+    default=df["region"].unique(),
+)
+
 # Filter
 filter_data = df.query(
-    "name == @name & tahun == @tahun"
+    "name == @name & tahun == @tahun & region == @region"
 )
 
 # Chart
